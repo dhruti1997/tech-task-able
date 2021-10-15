@@ -37,3 +37,8 @@ td{
     padding: 10px;
 }
   
+#sample-container{
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 10px;
+}

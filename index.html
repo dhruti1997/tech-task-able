@@ -7,9 +7,8 @@
     <body>
         <div id="container" class="layout-column">
             <!-- input text -->
-            <label>Product Details</label>
             <div id="input-container">
-                <input id="product-details-text" type="text" placeholder="enter product details"/>
+                <textarea id="product-details-text" cols=50 rows=10 placeholder="enter product details"></textarea>
             </div>
             <div id="buttons-panel">
                 <button onclick="submitProductDetails()">Submit</button>                
@@ -19,6 +18,12 @@
             <!-- output table -->
             <div id="output-container">
                 <table id="product-details-table"></table>
+            </div>
+
+            <!-- sample input format -->
+            <div id="sample-container" class="layout-column">
+                <h5>Expected Input JSON</h5>
+                <textarea id="sample-json" disabled="true" cols=50 rows=10></textarea>
             </div>
         </div>
         <script src="script.js"></script>

@@ -217,5 +217,49 @@ function submitProductDetails() {
 }
 
 function resetProductDetails() {
+    document.getElementById("product-details-text").value = null;
     $("#product-details-table").children().remove();
 }
+
+const sampleJSON = {
+    "name": "Tshirt",
+    "attributes": [
+        {
+            "name": "color",
+            "values": [
+                {
+                  "name": "red",
+                  "active": true
+                },
+                {
+                  "name": "blue",
+                  "active": true
+                },
+                {
+                  "name": "green",
+                  "active": true
+                }
+            ]
+        },
+        {
+            "name": "size",
+            "values": [
+                {
+                  "name": "S",
+                  "active": true
+                },
+                {
+                  "name": "M",
+                  "active": false
+                },
+                {
+                  "name": "L",
+                  "active": true
+                }
+            ]
+        }
+    ]
+}
+
+const sampleJSONText = JSON.stringify(sampleJSON, undefined, 4);
+document.getElementById("sample-json").value = sampleJSONText;
