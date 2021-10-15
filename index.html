@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
@@ -6,13 +7,11 @@
     <body>
         <div id="container">
 
-            <!-- input form -->
+            <!-- input text -->
             <div id="input-container">
-                <form id="product-details-form" onsubmit="submitProductDetails()">
-                    <label>Product Details</label>
-                    <input id="product-details-text" type="text" placeholder="enter product details"/>
-                    <input type="submit" value="Submit"/>
-                </form>
+                <label>Product Details</label>
+                <input id="product-details-text" type="text" placeholder="enter product details"/>
+                <button onclick="submitProductDetails()">Submit</button>                
             </div>
 
             <!-- output table -->
