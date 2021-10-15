@@ -187,21 +187,26 @@ function createTable(productDetailsTable, product) {
 }
 
 function submitProductDetails() {
-    // 1. get the text field value
-    const productDetails = document.getElementById("product-details-text").value;
+    try {
+        // 1. get the text field value
+        const productDetails = document.getElementById("product-details-text").value;
 
-    // 1.1. basic validations
-    const productDetailsValidation = validateProductDetails(productDetails);
-    if(!productDetailsValidation.isValid) {
-        alert(productDetailsValidation.message);
+        // 1.1. basic validations
+        const productDetailsValidation = validateProductDetails(productDetails);
+        if(!productDetailsValidation.isValid) {
+            alert(productDetailsValidation.message);
+        }
+
+        // 2. class objects
+        const product = new Product(JSON.parse(productDetails));
+
+        // 3. create table
+        const productDetailsTable = document.getElementById("product-details-table");
+        createTable(productDetailsTable, product);
+
+        return true;
     }
-
-    // 2. class objects
-    const product = new Product(JSON.parse(productDetails));
-
-    // 3. create table
-    const productDetailsTable = document.getElementById("product-details-table");
-    createTable(productDetailsTable, product);
-
-    return true;
+    catch(err) {
+        alert(err);
+    }
 }
