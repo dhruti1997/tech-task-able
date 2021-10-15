@@ -147,6 +147,7 @@ function validateProductDetails(productDetails) {
 
 function createTable(productDetailsTable, product) {
     const productAttributes = product.productAttributes;
+    const productCombination = product.productSKUs;
     
     // 1. table headers
     // table headers - product name 
