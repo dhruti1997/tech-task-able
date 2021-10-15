@@ -34,7 +34,7 @@ class Product {
     }
 
     get productAttributes() {
-        return this.#attributes;
+        return this.#attributes.map((attribute) => { return attribute.productAttributeName });
     }
 
     // private fields
@@ -103,6 +103,31 @@ function validateProductDetails(productDetails) {
     })
 
     return validation;
+}
+
+function createTable(productDetailsTable, product) {
+    const productAttributes = product.productAttributes;
+    
+    // 1. table headers
+    // table headers - product name 
+    let thead = productDetailsTable.createTHead();
+    let headRow = thead.insertRow();
+
+    let nameHead = document.createElement("th");
+    let nameText = document.createTextNode(product.productName);
+
+    nameHead.appendChild(nameText);
+    headRow.appendChild(nameHead);
+
+    // table headers - product attrbutes
+    let attributeHeadRow = thead.insertRow();
+    productAttributes.forEach((productAttribute) => {
+        let th = document.createElement("th");
+        let text = document.createElement(productAttribute);
+
+        th.appendChild(text);
+        attributeHeadRow.appendChild(th);
+    })
 }
 
 function submitProductDetails() {
