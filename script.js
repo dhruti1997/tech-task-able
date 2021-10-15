@@ -28,6 +28,42 @@ class Product {
         });
     }
 
+    // private methods
+    _getProductCombination(attributes) {
+        if(attributes.length == 1) {
+            const lastAttributeValues = attributes[0].productAttributeValues;
+            const lastAttributeName = attributes[0].productAttributeName;
+    
+            return lastAttributeValues.map((productAttributeValue) => {
+                let productAttributeValueObject = {};
+                productAttributeValueObject[lastAttributeName] = productAttributeValue.name;
+                productAttributeValueObject["active"] = !productAttributeValue.active;
+                
+                return productAttributeValueObject;
+            })
+        }
+        else {
+            let productCombinations = [];
+    
+            const otherAttrbiuteCombination = getProductCombination(attributes.slice(1));
+            const firstAttrbuteValues = attributes[0].productAttributeValues;
+            const firstAttributeName = attributes[0].productAttributeName;
+            
+            for(let idx=0; idx<firstAttrbuteValues.length; idx++) {
+                for(let idy=0; idy<otherAttrbiuteCombination.length; idy++) {
+                    const productCombinationObject = JSON.parse(JSON.stringify(otherAttrbiuteCombination[idy]));
+    
+                    productCombinationObject[firstAttributeName] = firstAttrbuteValues[idx].name;
+                    productCombinationObject["active"] = ! (productCombinationObject["active"] || firstAttrbuteValues[idx].active);
+    
+                    productCombinations.push(productCombinationObject);
+                }
+            }
+    
+            return productCombinations;
+        }
+    }
+
     // getters
     get productName() {
         return this.#name;
@@ -35,6 +71,10 @@ class Product {
 
     get productAttributes() {
         return this.#attributes.map((attribute) => { return attribute.productAttributeName });
+    }
+
+    get productSKUs() {
+        return getProductCombination(this.#attributes);
     }
 
     // private fields
@@ -127,6 +167,21 @@ function createTable(productDetailsTable, product) {
 
         th.appendChild(text);
         attributeHeadRow.appendChild(th);
+    })
+
+    // 2. table body
+    // table body - attrbite details
+    let tbody = productDetailsTable.createTBody();
+    productCombination.forEach((productCombination) => {
+        let row = tbody.insertRow();
+
+        productAttributes.forEach((attribute) => {
+            let td = document.createElement("td");
+            let text = document.createElement(productCombination[attribute]);
+
+            td.appendChild(text);
+            row.appendChild(td);
+        })
     })
 }
 
