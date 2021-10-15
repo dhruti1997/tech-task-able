@@ -95,3 +95,158 @@ describe("validateProductDetails", () => {
         expect(validateProductDetails(JSON.stringify(validInputJSON))).to.deep.equal({"isValid": true, "message": ""});
     })
 })
+
+describe("class::Product", () => {
+    const validInputJSON = {
+        "name": "T-shirt",
+        "attributes": [{
+            "name": "color",
+            "values": [{
+                "name": "red",
+                "active": true
+            }]
+        }, {
+            "name": "size",
+            "values": [{
+                "name": "S",
+                "active": true
+            }]
+        }]
+    }
+
+    function getInstance (validInputJSON) {
+        return new Product(validInputJSON);
+    }
+  
+    const product = getInstance(validInputJSON)
+    it("should have a getter property 'productName'", function () {
+        expect(product.productName).to.be.a("string").and.to.deep.equal("T-shirt");
+    })
+
+    it("should have a getter property 'productAttributes'", function () {
+        expect(product.productAttributes).to.deep.equal(["color", "size"]);
+    })
+
+    it("should have a getter property 'productSKUs'", function () {
+        expect(product.productSKUs).to.deep.equal([
+            {
+                "color": "red",
+                "size": "S",
+                "active": true
+            }
+        ]);
+    })
+  
+    it("should return product comibination with different input json - test-1", function () {
+        const validInputJSON1 = {
+            "name": "T-shirt",
+            "attributes": [{
+                "name": "color",
+                "values": [{
+                    "name": "red",
+                    "active": true
+                }]
+            }, {
+                "name": "size",
+                "values": [{
+                    "name": "S",
+                    "active": false
+                }]
+            }]
+        }
+
+        const product = getInstance(validInputJSON1)
+        expect(product.productSKUs).to.deep.equal([
+            {
+                "color": "red",
+                "size": "S",
+                "active": false
+            }
+        ]);
+    })
+
+    it("should return product comibination with different input json - test-2", function () {
+        const validInputJSON1 = {
+            "name": "T-shirt",
+            "attributes": [{
+                "name": "color",
+                "values": [{
+                    "name": "red",
+                    "active": true
+                }]
+            }, {
+                "name": "size",
+                "values": [{
+                    "name": "S",
+                    "active": false
+                },{
+                    "name": "M",
+                    "active": true
+                }]
+            }]
+        }
+
+        const product = getInstance(validInputJSON1)
+        expect(product.productSKUs).to.deep.equal([
+            {
+                "color": "red",
+                "size": "S",
+                "active": false
+            },
+            {
+                "color": "red",
+                "size": "M",
+                "active": true
+            }
+        ]);
+    })
+
+    it("should return product comibination with different input json - test-3", function () {
+        const validInputJSON1 = {
+            "name": "T-shirt",
+            "attributes": [{
+                "name": "color",
+                "values": [{
+                    "name": "red",
+                    "active": true
+                },{
+                    "name": "green",
+                    "active": true
+                }]
+            }, {
+                "name": "size",
+                "values": [{
+                    "name": "S",
+                    "active": false
+                },{
+                    "name": "M",
+                    "active": true
+                }]
+            }]
+        }
+
+        const product = getInstance(validInputJSON1)
+        expect(product.productSKUs).to.deep.equal([
+            {
+                "color": "red",
+                "size": "S",
+                "active": false
+            },
+            {
+                "color": "red",
+                "size": "M",
+                "active": true
+            },
+            {
+                "color": "green",
+                "size": "S",
+                "active": false
+            },
+            {
+                "color": "green",
+                "size": "M",
+                "active": true
+            }
+        ]);
+    })
+})
