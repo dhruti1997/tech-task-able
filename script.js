@@ -186,6 +186,8 @@ function createTable(productDetailsTable, product) {
             })
         }
     })
+
+    productDetailsTable.rows[0].cells[0].colSpan = productAttributes.length
 }
 
 function submitProductDetails() {
@@ -197,6 +199,7 @@ function submitProductDetails() {
         const productDetailsValidation = validateProductDetails(productDetails);
         if(!productDetailsValidation.isValid) {
             alert(productDetailsValidation.message);
+            return true;
         }
 
         // 2. class objects

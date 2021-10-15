@@ -1,0 +1,39 @@
+body{
+	font-family: 'Open Sans',sans-serif;
+}
+
+#container{
+    padding: auto;
+    margin: auto;	
+}
+
+#input-container{
+    padding-top: 10px;
+}
+
+#buttons-panel{
+    padding-top: 10px;
+}
+
+#output-container{
+    padding-top: 10px;
+}
+
+table{
+    border-collapse: collapse;
+    width: 50%;
+}
+  
+th{
+    border: 1px solid;
+    text-align: left;
+    background-color: #dddddd;
+    padding: 10px;
+}
+
+td{
+    border: 1px solid;
+    text-align: left;
+    padding: 10px;
+}
+  
