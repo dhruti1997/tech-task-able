@@ -126,7 +126,7 @@ function validateProductDetails(productDetails) {
 
     // validate the json 
     try {
-        JSON.parse(JSON.stringify(productDetails));
+        JSON.parse(productDetails);
     }
     catch(err) {
         validation.isValid = false;
@@ -142,7 +142,7 @@ function validateProductDetails(productDetails) {
         return validation;
     }
 
-    if(!productDetailsJSON.attributes) {
+    if(!productDetailsJSON.attributes || !productDetailsJSON.attributes.length) {
         validation.isValid = false;
         validation.message = "Product Attributes not Found";
         return validation;
@@ -155,7 +155,7 @@ function validateProductDetails(productDetails) {
             return validation;
         }
 
-        if(!attribute.values) {
+        if(!attribute.values || !attribute.values.length) {
             validation.isValid = false;
             validation.message = "Product Attribute Values not Found";
             return validation;
@@ -253,12 +253,20 @@ function submitProductDetails() {
 }
 
 /**
- * @function submitProductDetails
+ * @function resetProductDetails
  * @summary  on reset function
 */
 function resetProductDetails() {
     document.getElementById("product-details-text").value = null;
     $("#product-details-table").children().remove();
+}
+
+/**
+ * @function resetProductDetails
+ * @summary  function to redirect on test page
+*/
+function redirectToTestPage() {
+    location.replace("test.html")
 }
 
 // sample JSON input
@@ -302,6 +310,8 @@ const sampleJSON = {
     ]
 }
 
-// set sample JSON text
-const sampleJSONText = JSON.stringify(sampleJSON, undefined, 4);
-document.getElementById("sample-json").value = sampleJSONText;
+// set sample JSON text on load
+window.onload = function init() {
+    const sampleJSONText = JSON.stringify(sampleJSON, undefined, 4);
+    document.getElementById("sample-json").value = sampleJSONText;
+}
