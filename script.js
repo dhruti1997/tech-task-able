@@ -45,7 +45,7 @@ class Product {
         else {
             let productCombinations = [];
     
-            const otherAttrbiuteCombination = getProductCombination(attributes.slice(1));
+            const otherAttrbiuteCombination = this._getProductCombination(attributes.slice(1));
             const firstAttrbuteValues = attributes[0].productAttributeValues;
             const firstAttributeName = attributes[0].productAttributeName;
             
@@ -74,7 +74,7 @@ class Product {
     }
 
     get productSKUs() {
-        return getProductCombination(this.#attributes);
+        return this._getProductCombination(this.#attributes);
     }
 
     // private fields
@@ -163,7 +163,7 @@ function createTable(productDetailsTable, product) {
     let attributeHeadRow = thead.insertRow();
     productAttributes.forEach((productAttribute) => {
         let th = document.createElement("th");
-        let text = document.createElement(productAttribute);
+        let text = document.createTextNode(productAttribute);
 
         th.appendChild(text);
         attributeHeadRow.appendChild(th);
@@ -177,7 +177,7 @@ function createTable(productDetailsTable, product) {
 
         productAttributes.forEach((attribute) => {
             let td = document.createElement("td");
-            let text = document.createElement(productCombination[attribute]);
+            let text = document.createTextNode(productCombination[attribute]);
 
             td.appendChild(text);
             row.appendChild(td);
