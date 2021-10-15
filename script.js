@@ -1,11 +1,17 @@
 // class declarations
+/**
+ * @class     ProductAttribute
+ * @classdesc Definition for product attributes
+*/
 class ProductAttribute {
+    // #region Constructor
     constructor(productAttribute) {
         this.#name = productAttribute.name;
         this.#values = productAttribute.values;
     }
+    // #endregion
 
-    // getters
+    // #region getters
     get productAttributeName() {
         return this.#name;
     }
@@ -13,13 +19,21 @@ class ProductAttribute {
     get productAttributeValues() {
         return this.#values;
     }
+    // #endregion
 
-    // private fields
+    // #region private fields
     #name = "";
     #values = [];
+    // #endregion
+
 }
 
+/**
+ * @class     Product
+ * @classdesc Basic Product Class - manages product name and attributes information
+*/
 class Product {
+    // #region Constructor
     constructor(product) {
         this.#name = product.name;
     
@@ -27,8 +41,14 @@ class Product {
             this.#attributes.push(new ProductAttribute(productAttribute))
         });
     }
+    // #endregion
 
-    // private methods
+    // #region private methods
+    /**
+	 * @function _getProductCombination
+	 * @memberof Product
+	 * @returns  Unique product combinations
+	 */
     _getProductCombination(attributes) {
         if(attributes.length == 1) {
             const lastAttributeValues = attributes[0].productAttributeValues;
@@ -63,8 +83,9 @@ class Product {
             return productCombinations;
         }
     }
+    // #endregion
 
-    // getters
+    // #region getters
     get productName() {
         return this.#name;
     }
@@ -76,12 +97,19 @@ class Product {
     get productSKUs() {
         return this._getProductCombination(this.#attributes);
     }
+    // #endregion
 
-    // private fields
+    // #region private fields
     #name = "";
     #attributes = [];
+    // #endregion
+
 }
 
+/**
+ * @function validateProductDetails
+ * @returns  validation for input string
+*/
 function validateProductDetails(productDetails) {
     const validation = {
         "isValid": true,
@@ -145,6 +173,10 @@ function validateProductDetails(productDetails) {
     return validation;
 }
 
+/**
+ * @function createTable
+ * @summary  create table based on the given product details
+*/
 function createTable(productDetailsTable, product) {
     const productAttributes = product.productAttributes;
     const productCombinations = product.productSKUs;
@@ -190,6 +222,10 @@ function createTable(productDetailsTable, product) {
     productDetailsTable.rows[0].cells[0].colSpan = productAttributes.length
 }
 
+/**
+ * @function submitProductDetails
+ * @summary  on submit function
+*/
 function submitProductDetails() {
     try {
         // 1. get the text field value
@@ -216,11 +252,16 @@ function submitProductDetails() {
     }
 }
 
+/**
+ * @function submitProductDetails
+ * @summary  on reset function
+*/
 function resetProductDetails() {
     document.getElementById("product-details-text").value = null;
     $("#product-details-table").children().remove();
 }
 
+// sample JSON input
 const sampleJSON = {
     "name": "Tshirt",
     "attributes": [
@@ -261,5 +302,6 @@ const sampleJSON = {
     ]
 }
 
+// set sample JSON text
 const sampleJSONText = JSON.stringify(sampleJSON, undefined, 4);
 document.getElementById("sample-json").value = sampleJSONText;
