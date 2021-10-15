@@ -124,7 +124,7 @@ describe("class::Product", () => {
     })
 
     it("should have a getter property 'productAttributes'", function () {
-        expect(product.productAttributes).to.deep.equal(["color", "size"]);
+        expect(product.productAttributesName).to.deep.equal(["color", "size"]);
     })
 
     it("should have a getter property 'productSKUs'", function () {
@@ -248,5 +248,68 @@ describe("class::Product", () => {
                 "active": true
             }
         ]);
+    })
+
+    it("should return product comibination with different input json - test-4", function () {
+        const validInputJSON1 = {
+            "name": "T-shirt",
+            "attributes": [{
+                "name": "color",
+                "values": [{
+                    "name": "red",
+                    "active": true
+                },{
+                    "name": "green",
+                    "active": true
+                }]
+            }]
+        }
+
+        const product = getInstance(validInputJSON1)
+        expect(product.productSKUs).to.deep.equal([
+            {
+                "color": "red",
+                "active": true
+            },
+            {
+                "color": "green",
+                "active": true
+            }
+        ]);
+    })
+})
+
+describe("class::ProductAttribute", () => {
+    const validInputJSON = {
+        "name": "T-shirt",
+        "attributes": [{
+            "name": "color",
+            "values": [{
+                "name": "red",
+                "active": true
+            }]
+        }, {
+            "name": "size",
+            "values": [{
+                "name": "S",
+                "active": true
+            }]
+        }]
+    }
+
+    function getInstance (validInputJSON) {
+        return new Product(validInputJSON);
+    }
+  
+    const product = getInstance(validInputJSON)
+    it("should have a getter property 'productAttributeName'", function () {
+        expect(product.productAttributes[0].productAttributeName).to.be.a("string").to.deep.equal("color");
+    })
+
+    it("should have a getter property 'productAttributeValues'", function () {
+        expect(product.productAttributes[0].productAttributeValues).to.deep.equal([{
+            "name": "red",
+            "active": true
+        }]);
     })
 })

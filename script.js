@@ -90,8 +90,12 @@ class Product {
         return this.#name;
     }
 
-    get productAttributes() {
+    get productAttributesName() {
         return this.#attributes.map((attribute) => { return attribute.productAttributeName });
+    }
+
+    get productAttributes() {
+        return this.#attributes;
     }
 
     get productSKUs() {
@@ -178,7 +182,7 @@ function validateProductDetails(productDetails) {
  * @summary  create table based on the given product details
 */
 function createTable(productDetailsTable, product) {
-    const productAttributes = product.productAttributes;
+    const productAttributes = product.productAttributesName;
     const productCombinations = product.productSKUs;
     
     // 1. table headers
@@ -219,7 +223,7 @@ function createTable(productDetailsTable, product) {
         }
     })
 
-    productDetailsTable.rows[0].cells[0].colSpan = productAttributes.length
+    productDetailsTable.rows[0].cells[0].colSpan = productAttributes.length;
 }
 
 /**
