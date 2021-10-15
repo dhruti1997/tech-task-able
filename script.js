@@ -37,7 +37,7 @@ class Product {
             return lastAttributeValues.map((productAttributeValue) => {
                 let productAttributeValueObject = {};
                 productAttributeValueObject[lastAttributeName] = productAttributeValue.name;
-                productAttributeValueObject["active"] = !productAttributeValue.active;
+                productAttributeValueObject["active"] = productAttributeValue.active;
                 
                 return productAttributeValueObject;
             })
@@ -54,7 +54,7 @@ class Product {
                     const productCombinationObject = JSON.parse(JSON.stringify(otherAttrbiuteCombination[idy]));
     
                     productCombinationObject[firstAttributeName] = firstAttrbuteValues[idx].name;
-                    productCombinationObject["active"] = ! (productCombinationObject["active"] || firstAttrbuteValues[idx].active);
+                    productCombinationObject["active"] = productCombinationObject["active"] && firstAttrbuteValues[idx].active;
     
                     productCombinations.push(productCombinationObject);
                 }
@@ -147,7 +147,7 @@ function validateProductDetails(productDetails) {
 
 function createTable(productDetailsTable, product) {
     const productAttributes = product.productAttributes;
-    const productCombination = product.productSKUs;
+    const productCombinations = product.productSKUs;
     
     // 1. table headers
     // table headers - product name 
@@ -173,16 +173,18 @@ function createTable(productDetailsTable, product) {
     // 2. table body
     // table body - attrbite details
     let tbody = productDetailsTable.createTBody();
-    productCombination.forEach((productCombination) => {
-        let row = tbody.insertRow();
+    productCombinations.forEach((productCombination) => {
+        if(productCombination.active) {
+            let row = tbody.insertRow();
 
-        productAttributes.forEach((attribute) => {
-            let td = document.createElement("td");
-            let text = document.createTextNode(productCombination[attribute]);
+            productAttributes.forEach((attribute) => {
+                let td = document.createElement("td");
+                let text = document.createTextNode(productCombination[attribute]);
 
-            td.appendChild(text);
-            row.appendChild(td);
-        })
+                td.appendChild(text);
+                row.appendChild(td);
+            })
+        }
     })
 }
 
@@ -209,4 +211,8 @@ function submitProductDetails() {
     catch(err) {
         alert(err);
     }
+}
+
+function resetProductDetails() {
+    $("#product-details-table").children().remove();
 }
