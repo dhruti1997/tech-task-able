@@ -1,3 +1,40 @@
+// class declarations
+class ProductAttribute {
+    constructor(productAttribute) {
+        this.#name = productAttribute.name;
+        this.#values = productAttribute.values;
+    }
+
+    // getters
+    get productAttributeName() {
+        return this.#name;
+    }
+
+    get productAttributeValues() {
+        return this.#values;
+    }
+}
+
+class Product {
+    constructor(product) {
+        this.#name = product.name;
+    
+        this.#attributes = [];
+        product.attributes.forEach((productAttribute) => {
+            this.#attributes.push(new ProductAttribute(productAttribute.attributes))
+        });
+    }
+
+    // getters
+    get productName() {
+        return this.#name;
+    }
+
+    get productAttributes() {
+        return this.#attributes;
+    }
+}
+
 function validateProductDetails(productDetails) {
     const validation = {
         "isValid": true,
