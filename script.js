@@ -13,15 +13,18 @@ class ProductAttribute {
     get productAttributeValues() {
         return this.#values;
     }
+
+    // private fields
+    #name = "";
+    #values = [];
 }
 
 class Product {
     constructor(product) {
         this.#name = product.name;
     
-        this.#attributes = [];
         product.attributes.forEach((productAttribute) => {
-            this.#attributes.push(new ProductAttribute(productAttribute.attributes))
+            this.#attributes.push(new ProductAttribute(productAttribute))
         });
     }
 
@@ -33,6 +36,10 @@ class Product {
     get productAttributes() {
         return this.#attributes;
     }
+
+    // private fields
+    #name = "";
+    #attributes = [];
 }
 
 function validateProductDetails(productDetails) {
@@ -87,7 +94,7 @@ function validateProductDetails(productDetails) {
         }
 
         attribute.values.forEach((value) => {
-            if(!value.name || !value.active) {
+            if(!value.name || (value.active == null || value.active == undefined)) {
                 validation.isValid = false;
                 validation.message = "Invalid Product Attribute Value";
                 return validation;
