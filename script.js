@@ -107,6 +107,13 @@ function submitProductDetails() {
     if(!productDetailsValidation.isValid) {
         alert(productDetailsValidation.message);
     }
-    
+
+    // 2. class objects
+    const product = new Product(JSON.parse(productDetails));
+
+    // 3. create table
+    const productDetailsTable = document.getElementById("product-details-table");
+    createTable(productDetailsTable, product);
+
     return true;
 }
